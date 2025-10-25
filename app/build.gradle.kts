@@ -1,9 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
 }
+
+
 
 android {
     namespace = "com.example.projectjarvis"
@@ -26,6 +30,14 @@ android {
 
     }
 
+    val localProperties = Properties()
+    val localPropertiesFile = File(rootDir,"secret.properties")
+    if(localPropertiesFile.exists() && localPropertiesFile.isFile){
+        localPropertiesFile.inputStream().use{
+            localProperties.load(it)
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -34,6 +46,16 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        debug{
+            buildConfigField("String","brain_apikey", localProperties.getProperty("brain_api"))
+            buildConfigField("String","general_query_apikey", localProperties.getProperty("general_query_api"))
+            buildConfigField("String","realtime_query_apikey", localProperties.getProperty("realtime_query_api"))
+            buildConfigField("String","content_writing_apikey", localProperties.getProperty("content_writing_api"))
+            buildConfigField("String","spotify_credential_id_key", localProperties.getProperty("spotify_credential_id"))
+            buildConfigField("String","spotify_callback_key", localProperties.getProperty("spotify_callback"))
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -44,6 +66,8 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+        resValues = true
     }
 }
 

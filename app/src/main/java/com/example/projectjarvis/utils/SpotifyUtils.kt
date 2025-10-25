@@ -2,6 +2,7 @@ package com.example.projectjarvis.utils
 
 import android.content.Context
 import android.util.Log
+import com.example.projectjarvis.BuildConfig
 import com.example.projectjarvis.model.SearchResponse
 import com.example.projectjarvis.networking.retrofitservices.SpotifyApiService
 import com.spotify.android.appremote.api.ConnectionParams
@@ -15,8 +16,8 @@ import java.nio.charset.StandardCharsets
 
 class SpotifyHelper(private val context: Context) {
 
-    private val clientId = "acf77eb726c54f07b6a654c52b82fe35"
-    private val redirectUri = "com.example.projectjarvis://callback"
+    private val clientId = BuildConfig.spotify_credential_id_key
+    private val redirectUri = BuildConfig.spotify_callback_key
     var spotifyAppRemote: SpotifyAppRemote? = null
     var spotifyAccessToken: String? = null
 

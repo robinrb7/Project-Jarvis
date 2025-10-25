@@ -19,9 +19,10 @@ import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 
 class MainActivity : ComponentActivity() {
-    private val brainRepo = BrainRepository(RetrofitClient.brainApiService("nhTeQvf6i882URuoa7R2qz4tePZZ5NBRaUzfzopi"))
-    private val generalRepo = GeneralRepository(RetrofitClient.queryApiService("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"))
-    private val realtimeRepo = RealtimeRepository(RetrofitClient.queryApiService("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"))
+
+    private val brainRepo = BrainRepository(RetrofitClient.brainApiService(BuildConfig.brain_apikey))
+    private val generalRepo = GeneralRepository(RetrofitClient.queryApiService(BuildConfig.general_query_apikey))
+    private val realtimeRepo = RealtimeRepository(RetrofitClient.queryApiService(BuildConfig.realtime_query_apikey))
     private val automationRepo = AutomationRepository(this)
     private val spotifyHelper by lazy {SpotifyHelper(this)}
 

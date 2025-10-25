@@ -3,6 +3,7 @@ package com.example.automation.utils
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import com.example.projectjarvis.BuildConfig
 import com.example.projectjarvis.model.GrogRequest
 import com.example.projectjarvis.model.Message
 import com.example.projectjarvis.networking.RetrofitClient
@@ -13,7 +14,7 @@ class ContentWriter(private val context: Context) {
 
     suspend fun generateContent(prompt: String): String = withContext(Dispatchers.IO) {
         try {
-            val api = RetrofitClient.queryApiService("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")
+            val api = RetrofitClient.queryApiService(BuildConfig.content_writing_apikey)
 
             val systemPrompt = "Hello i am 'Robin Singh Khural'.You are a content writer .You write high-quality formal content like applications, letters, essays, or articles as requested by the user. Keep our answers around minimum of 150 words and maximum of 250 to 300 words."
 
