@@ -54,6 +54,9 @@ android {
             buildConfigField("String","content_writing_apikey", localProperties.getProperty("content_writing_api"))
             buildConfigField("String","spotify_credential_id_key", localProperties.getProperty("spotify_credential_id"))
             buildConfigField("String","spotify_callback_key", localProperties.getProperty("spotify_callback"))
+            buildConfigField("String","google_search_apikey", localProperties.getProperty("google_search_api"))
+            buildConfigField("String","google_search_cx_apikey", localProperties.getProperty("google_search_cx"))
+            buildConfigField("String","youtube_search_apikey", localProperties.getProperty("youtube_search_api"))
         }
 
     }

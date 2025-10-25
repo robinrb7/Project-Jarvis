@@ -1,5 +1,6 @@
 package com.example.projectjarvis.utils
 
+import com.example.projectjarvis.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -25,8 +26,8 @@ object RealtimePreamble {
 
 object GoogleSearch {
 
-    private const val API_KEY = "AIzaSyCyjAkuOzV_Yu9lT-CgKUktp-k7qiy0Zb4"
-    private const val CX = "22aa4bbb583f84c93"
+    private const val API_KEY = BuildConfig.google_search_apikey
+    private const val CX = BuildConfig.google_search_cx_apikey
 
     suspend fun getSearchResults(query: String): String = withContext(Dispatchers.IO) {
         val urlString =

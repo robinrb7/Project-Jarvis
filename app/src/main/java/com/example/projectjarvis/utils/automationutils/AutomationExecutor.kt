@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresPermission
+import com.example.projectjarvis.BuildConfig
 import com.example.projectjarvis.service.AutomationAccessibilityService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -94,7 +95,7 @@ class AutomationExecutor(private val context: Context) {
      suspend fun searchYoutube(query: String) = withContext(Dispatchers.IO)  {
         try {
             // 1️⃣ Prepare the search URL using YouTube Data API
-            val apiKey = "AIzaSyAa9uawF8SHkUQic8MAvhhYou-wMkCTeqg"
+            val apiKey = BuildConfig.youtube_search_apikey
             val encodedQuery = Uri.encode(query)
             val apiUrl =
                 "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=$encodedQuery&key=$apiKey"
