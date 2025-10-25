@@ -1,6 +1,7 @@
 package com.example.projectjarvis.viewmodel
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,6 +26,8 @@ class JarvisViewModel(
 
     private val _jarvisResponse = MutableStateFlow("")
     val jarvisResponse: StateFlow<String> = _jarvisResponse
+
+    private var mediaPlayer: MediaPlayer? = null
 
     /**
      * Main function to handle recognized text.
@@ -95,7 +98,7 @@ class JarvisViewModel(
 
                 // Step 6: Play TTS
                 try {
-                    playJarvisVoice(context, combinedResponse)
+                    playJarvisVoice(context, combinedResponse,mediaPlayer)
                 } catch (e: Exception) {
                     Log.e("JarvisTTS", "Failed to play TTS: ${e.message}", e)
                 }

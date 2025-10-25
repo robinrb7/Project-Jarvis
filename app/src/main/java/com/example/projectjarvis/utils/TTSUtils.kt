@@ -12,33 +12,38 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-suspend fun playJarvisVoice(context: Context, text: String) {
+suspend fun playJarvisVoice(context: Context, text: String, mediaPlayer: MediaPlayer?) {
     withContext(Dispatchers.IO) {
-        val call = RetrofitClient.ttsApiService.getSpeech(text)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful && response.body() != null) {
-                    try {
-                        val audioBytes = response.body()!!.bytes()
-                        val tempFile = File(context.cacheDir, "tts_current.mp3")
-                        tempFile.writeBytes(audioBytes)
+        try {
+            // Use Retrofit suspend call or wrap execute() in withContext(IO)
+            val response = RetrofitClient.ttsApiService.getSpeech(text)
 
-                        val player = MediaPlayer()
-                        player.setDataSource(tempFile.absolutePath)
-                        player.prepare()
-                        player.start()
+            if (response.isSuccessful && response.body() != null) {
+                val audioBytes = response.body()!!.bytes()
+                val tempFile = File(context.cacheDir, "tts_current.mp3")
+                tempFile.writeBytes(audioBytes)
 
-                    } catch (e: Exception) {
-                        Log.e("TTS", "Playback error: ${e.message}")
-                    }
-                } else {
-                    Log.e("TTS", "Response failed: ${response.code()}")
+                // Stop previous playback if any
+                mediaPlayer?.stop()
+                mediaPlayer?.release()
+
+                val player = MediaPlayer().apply {
+                    setDataSource(tempFile.absolutePath)
+                    prepare()
+                    start()
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("TTS", "Error: ${t.message}")
+                // Suspend until playback finishes
+                while (player.isPlaying) {
+                    kotlinx.coroutines.delay(100)
+                }
+
+                player.release()
+            } else {
+                Log.e("TTS", "Response failed: ${response.code()}")
             }
-        })
+        } catch (e: Exception) {
+            Log.e("TTS", "Playback error: ${e.message}")
+        }
     }
 }
