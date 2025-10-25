@@ -70,9 +70,9 @@ class MainActivity : ComponentActivity() {
 
     private fun authenticateSpotifyUser() {
         val request = AuthorizationRequest.Builder(
-            "acf77eb726c54f07b6a654c52b82fe35",
+            BuildConfig.spotify_credential_id_key,
             AuthorizationResponse.Type.TOKEN,
-            "com.example.projectjarvis://callback"
+            BuildConfig.spotify_callback_key
         ).setScopes(arrayOf("app-remote-control")).build()
 
         val intent = AuthorizationClient.createLoginActivityIntent(this, request)
