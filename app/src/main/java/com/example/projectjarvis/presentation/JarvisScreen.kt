@@ -62,7 +62,7 @@ fun JarvisScreen(jarvisViewModel: JarvisViewModel) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color(0xFFF1F6FC)
+        color = Color(0xFF172331)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
 
@@ -70,11 +70,11 @@ fun JarvisScreen(jarvisViewModel: JarvisViewModel) {
             Box(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .offset(y = 80.dp) // bring it down toward center
+                    .offset(y = 100.dp) // bring it down toward center
             ) {
                 JarvisGlobe(
                     isActive = isListening || jarvisResponse.isNotEmpty(),
-                    modifier = Modifier.size(220.dp) // bigger globe
+                    modifier = Modifier.size(250.dp) // bigger globe
                 )
             }
 
@@ -84,7 +84,7 @@ fun JarvisScreen(jarvisViewModel: JarvisViewModel) {
                     .fillMaxSize()
                     .padding(horizontal = 20.dp)
             ) {
-                Spacer(modifier = Modifier.height(340.dp)) // leave space for globe at top center
+                Spacer(modifier = Modifier.height(400.dp)) // leave space for globe at top center
 
                 LazyColumn(
                     modifier = Modifier

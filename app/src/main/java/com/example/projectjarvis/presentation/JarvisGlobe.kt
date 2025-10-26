@@ -16,6 +16,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlin.math.sin
 
@@ -54,7 +55,7 @@ fun JarvisGlobe(
         // Outer circle (globe)
         drawCircle(
             brush = Brush.radialGradient(
-                colors = listOf(Color(0xFF2C89D3), Color(0xFF0E0E88)),
+                colors = listOf(Color(0xFF2C89D3), Color(0xFF3939C2)),
                 center = center,
                 radius = radius
             ),
@@ -78,3 +79,9 @@ fun JarvisGlobe(
         }
     }
 }
+//
+//@Preview(showSystemUi = true)
+//@Composable
+//fun ShowGlobe(){
+//    JarvisGlobe(isActive = true)
+//}
