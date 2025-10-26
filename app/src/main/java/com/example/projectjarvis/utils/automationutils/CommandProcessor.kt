@@ -3,6 +3,8 @@ package com.example.projectjarvis.utils.automationutils
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.projectjarvis.repository.AutomationRepository
 import com.example.projectjarvis.utils.SpotifyHelper
@@ -16,6 +18,7 @@ class CommandProcessor(
 ) {
     private val executor = AutomationExecutor(context)
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     suspend fun processCommand(command: String): String = withContext(Dispatchers.IO) {
         val cmd = command.lowercase().trim()
 
@@ -75,17 +78,6 @@ class CommandProcessor(
                     "System Controls updated"
                 }
 
-
-                cmd.contains("wifi on") -> {
-                    safeExecute { executor.toggleWiFi(true) }
-                    "Wi-Fi turned on."
-                }
-
-                cmd.contains("wifi off") -> {
-                    safeExecute { executor.toggleWiFi(false) }
-                    "Wi-Fi turned off."
-                }
-
                 cmd.startsWith("content ")  -> {
                     safeExecute {
                         repository.writeContent(cmd.removePrefix("content ").trim())
@@ -93,6 +85,7 @@ class CommandProcessor(
                         "Generated content:\n$content"
                     } ?: "Failed to generate content."
                 }
+
 
                 else -> {
                     "Command not recognized or delegated to general/realtime handler.\n $command"

@@ -7,8 +7,11 @@ import android.content.Intent
 import android.media.AudioManager
 import android.net.Uri
 import android.net.wifi.WifiManager
+import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import com.example.projectjarvis.BuildConfig
 import com.example.projectjarvis.service.AutomationAccessibilityService
@@ -137,6 +140,7 @@ class AutomationExecutor(private val context: Context) {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     fun systemControls(command: String){
 
         val audio = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -152,6 +156,14 @@ class AutomationExecutor(private val context: Context) {
             command == "unmute" -> unmute()
             command == "volume up" -> volumeUp()
             command == "volume down" -> volumeDown()
+
+            // ✅ Open Wi-Fi settings
+            command.contains("Wi-Fi") || command.contains("Wifi") -> openSettingsPanel(Settings.Panel.ACTION_WIFI)
+
+
+            // ✅ Open Internet settings for mobile data
+            command.contains("internet") || command.contains("mobile data") ->
+                openSettingsPanel(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
 
             command.startsWith("set volume to") -> {
                 // Extract number from command
@@ -177,21 +189,17 @@ class AutomationExecutor(private val context: Context) {
     }
 
 
-    @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
-    fun toggleBluetooth(enable: Boolean) {
-        val adapter = BluetoothAdapter.getDefaultAdapter()
-        if (enable) adapter.enable() else adapter.disable()
+    private fun openSettingsPanel(action: String) {
+        try {
+            val intent = Intent(action)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            // fallback if panel not available on some OEMs
+            val fallback = Intent(Settings.ACTION_SETTINGS)
+            fallback.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(fallback)
+        }
     }
-
-    fun toggleWiFi(enable: Boolean) {
-        val wifi = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        wifi.isWifiEnabled = enable
-    }
-
-//    fun toggleMobileData(enable: Boolean) {
-//        // Restricted for Android 10+, open Internet Settings instead
-//        val intent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
-//        context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-//    }
 
 }
