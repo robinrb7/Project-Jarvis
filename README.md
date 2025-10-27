@@ -4,7 +4,7 @@
 **Jarvis** is an advanced, intelligent Android voice assistant that understands your commands, provides instant answers, and seamlessly manages tasks across your device. With Jarvis, you can interact naturally using voice or text, making your device smarter and more responsive than ever before.
 
 🎥 **Watch the Demo:**  
-[![Jarvis Demo Video](https://img.shields.io/badge/▶️%20Watch%20Demo-%23FF0000?style=for-the-badge&logo=youtube&logoColor=white)](YOUR_VIDEO_LINK_HERE)
+[![Jarvis Demo Video](https://img.shields.io/badge/▶️%20Watch%20Demo-%23FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.linkedin.com/feed/update/urn:li:activity:7388533682254344192/?originTrackingId=%2BCUxUbsX0l7yn%2BUJz0qxgA%3D%3D)
 
 ---
 
